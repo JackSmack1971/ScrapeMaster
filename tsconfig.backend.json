@@ -3,7 +3,8 @@
   "compilerOptions": {
     "rootDir": "./backend",
     "outDir": "./dist/backend",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "types": ["node", "jest"]
   },
   "include": ["backend/**/*"]
 }
