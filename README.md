@@ -68,3 +68,6 @@ npm run test:coverage    # Full suite with coverage
 - The project relies on Node 18 and uses `cross-env` in npm scripts to manage environment variables across platforms.
 - Development scripts work on Linux, macOS, and Windows (including WSL). Ensure Chrome dependencies are installed for Puppeteer on your OS.
 - Always verify cross-platform compatibility during code review.
+
+## Security Standards
+ScrapeMaster Pro follows strict security practices. See [SECURITY.md](SECURITY.md) for guidelines on using environment variables, validating inputs, adding retries and timeouts, and implementing custom exception handling.
