@@ -1,0 +1,61 @@
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
+const Project = require('./Project'); // Import Project model for association
+
+const Export = sequelize.define('Export', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  project_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: Project,
+      key: 'id',
+    },
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  format: {
+    type: DataTypes.STRING, // e.g., 'csv', 'json', 'excel'
+    allowNull: false,
+  },
+  file_path: {
+    type: DataTypes.STRING, // Path to the exported file
+  },
+  filters: {
+    type: DataTypes.JSON, // JSON object for data filtering criteria
+  },
+  field_mapping: {
+    type: DataTypes.JSON, // JSON object for mapping scraped data fields to export fields
+  },
+  record_count: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  file_size: {
+    type: DataTypes.INTEGER, // Size in bytes
+    defaultValue: 0,
+  },
+  created_at: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
+  status: {
+    type: DataTypes.STRING, // e.g., 'pending', 'completed', 'failed'
+    defaultValue: 'pending',
+  },
+}, {
+  tableName: 'exports',
+  timestamps: false,
+});
+
+// Define association
+Export.belongsTo(Project, { foreignKey: 'project_id' });
+Project.hasMany(Export, { foreignKey: 'project_id' });
+
+module.exports = Export;
