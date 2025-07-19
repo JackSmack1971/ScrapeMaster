@@ -8,7 +8,10 @@ import User from '../../models/User'; // Adjust path as needed
 const UserModel = User as typeof User & (new () => UserInstance);
 
 const generateToken = (id: number): string => {
-  return jwt.sign({ id }, process.env.JWT_SECRET || 'supersecretjwtkey', {
+  if (!process.env.JWT_SECRET) {
+    throw new Error('JWT_SECRET environment variable is required');
+  }
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '24h',
   });
 };
@@ -22,7 +25,10 @@ const protect = asyncHandler(async (req: AuthenticatedRequest, res: Response, ne
       token = req.headers.authorization.split(' ')[1];
 
       // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'supersecretjwtkey') as { id: number };
+      if (!process.env.JWT_SECRET) {
+        throw new Error('JWT_SECRET environment variable is required');
+      }
+      const decoded = jwt.verify(token, process.env.JWT_SECRET) as { id: number };
 
       // Get user from the token
       const user = await UserModel.findByPk(decoded.id);
