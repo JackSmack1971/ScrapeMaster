@@ -23,6 +23,7 @@ npx puppeteer browsers install chrome
 
 # Copy example environment variables and edit values
 cp .env.example .env
+# Set JWT_SECRET in .env to a strong, unique value
 
 # Initialize database
 npm run db:migrate

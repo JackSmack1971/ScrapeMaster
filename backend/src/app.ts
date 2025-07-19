@@ -7,6 +7,7 @@ import fs from 'fs';
 import http from 'http'; // Import http module
 import sequelize from '../config/database'; // Adjust path as needed
 import connectDB from '../config/mongoose'; // Import Mongoose connection
+import { validateEnv } from './config/validateEnv';
 
 // Import middleware
 import { requestLogger } from './middleware/loggerMiddleware';
@@ -28,6 +29,7 @@ import { JobMonitorService } from './services/JobMonitorService';
 
 // Load environment variables
 dotenv.config();
+validateEnv();
 
 const app = express();
 const PORT = process.env.PORT || 5000;

@@ -4,6 +4,12 @@ const config: Config = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   roots: ['<rootDir>/backend', '<rootDir>/src/tests'],
+  setupFiles: ['<rootDir>/jest.setup.ts'],
+  globals: {
+    'ts-jest': {
+      diagnostics: false,
+    },
+  },
   coverageDirectory: 'coverage',
   collectCoverageFrom: [
     'backend/**/*.ts',
